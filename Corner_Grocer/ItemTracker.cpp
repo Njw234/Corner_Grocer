@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include <algorithm>
 
 using namespace std;
 
@@ -20,11 +21,13 @@ void ItemTracker::LoadData(const string& filename) {
 
     string item;
     while (inputFile >> item) {
+        item = ToLower(item); // Normalize to lowercase
         ++itemFrequency[item];
     }
 
     inputFile.close();
 }
+
 
 void ItemTracker::SaveFrequencyData(const string& filename) {
     ofstream outFile(filename);
@@ -35,8 +38,9 @@ void ItemTracker::SaveFrequencyData(const string& filename) {
 }
 
 int ItemTracker::GetItemFrequency(const string& item) {
-    if (itemFrequency.find(item) != itemFrequency.end()) {
-        return itemFrequency[item];
+    string normalizedItem = ToLower(item); // Convert input to lowercase
+    if (itemFrequency.find(normalizedItem) != itemFrequency.end()) {
+        return itemFrequency[normalizedItem];
     }
     return 0;
 }
@@ -55,4 +59,14 @@ void ItemTracker::PrintHistogram() {
         }
         cout << endl;
     }
+
 }
+
+// Convert a string to lowercase
+std::string ItemTracker::ToLower(const std::string& str) {
+    std::string lowerStr = str;
+    std::transform(lowerStr.begin(), lowerStr.end(), lowerStr.begin(),
+        [](unsigned char c) { return std::tolower(c); });
+    return lowerStr;
+}
+

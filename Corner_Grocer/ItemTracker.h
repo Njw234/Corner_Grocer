@@ -13,6 +13,7 @@
 class ItemTracker {
 private:
     std::map<std::string, int> itemFrequency;
+   
 
 public:
     void LoadData(const std::string& filename);
@@ -20,6 +21,7 @@ public:
     int GetItemFrequency(const std::string& item);
     void PrintItemFrequency();
     void PrintHistogram();
+    std::string ToLower(const std::string& str);
 };
 
 #endif

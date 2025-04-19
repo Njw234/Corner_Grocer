@@ -39,11 +39,19 @@ int main() {
         cin.ignore();  // Clear newline after number input
 
         switch (choice) {
-        case 1:
+        case 1: {
             cout << "Enter item name: ";
             getline(cin, item);
-            cout << item << " was purchased " << tracker.GetItemFrequency(item) << " times.\n";
+
+            // Convert the input to lowercase
+            string lowerItem = tracker.ToLower(item);
+
+            int count = tracker.GetItemFrequency(lowerItem);
+            cout << lowerItem << " was purchased " << count << " times.\n";
             break;
+        }
+
+        
 
         case 2:
             tracker.PrintItemFrequency();
